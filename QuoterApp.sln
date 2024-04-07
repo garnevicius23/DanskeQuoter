@@ -5,8 +5,6 @@ VisualStudioVersion = 17.6.33815.320
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "QuoterApp", "QuoterApp\QuoterApp.csproj", "{D727C0D8-C0D4-4FF1-966E-4FB9171686E4}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{04F6AFD4-FA62-479A-8DFB-5C217D00EABC}"
-EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "QuoterApp.Unit.Tests", "QuoterApp.Unit.Tests\QuoterApp.Unit.Tests.csproj", "{23366276-E19F-4F81-81CF-ED8057DD7B1C}"
 EndProject
 Global

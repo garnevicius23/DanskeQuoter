@@ -25,9 +25,6 @@ namespace QuoterApp.Endpoints
         {
             try
             {
-                if (string.IsNullOrEmpty(instrumentId))
-                    return Results.BadRequest("Instrument ID can't be null.");
-
                 return Results.Ok(quoter.GetQuote(instrumentId, quantity));
             }
             catch (ArgumentException ex)
@@ -38,20 +35,25 @@ namespace QuoterApp.Endpoints
             {
                 return Results.BadRequest(ex.Message);
             }
+            catch(Exception ex)
+            {
+                return Results.Problem("Internal server error.", statusCode: 500);
+            }
         }
 
         public IResult GetVwap(IQuoter quoter, string instrumentId)
         {
             try
             {
-                if (string.IsNullOrEmpty(instrumentId))
-                    return Results.BadRequest("Instrument ID can't be null.");
-
                 return Results.Ok(quoter.GetVolumeWeightedAveragePrice(instrumentId));
             }
             catch (ArgumentException ex)
             {
                 return Results.NotFound(ex.Message);
+            }
+            catch (Exception ex)
+            {
+                return Results.Problem("Internal server error.", statusCode: 500);
             }
         }
     }

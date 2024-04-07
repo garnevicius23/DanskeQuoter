@@ -2,7 +2,9 @@
 using Microsoft.Extensions.DependencyInjection;
 using QuoterApp.DataAccess;
 using QuoterApp.Endpoints;
+using QuoterApp.EventBus;
 using QuoterApp.Services;
+using QuoterApp.Workers;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -15,7 +17,7 @@ builder.Services.AddTransient<IQuoter, QuoterService>();
 builder.Services.AddSingleton<IMarketOrderSource, HardcodedMarketOrderSource>();
 builder.Services.AddSingleton<IOrdersRepository, OrdersRepository>();
 builder.Services.AddSingleton<IOrderPublisher, OrderPublisher>();
-builder.Services.AddHostedService<OrdersSubscriber>();
+builder.Services.AddHostedService<OrdersWorker>();
 
 var app = builder.Build();
 
