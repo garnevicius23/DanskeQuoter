@@ -14,7 +14,8 @@ namespace QuoterApp.Services
         }
         public double? GetQuote(string instrumentId, int quantity)
         {
-            var orders = _ordersRepository.GetInstrumentOrders(instrumentId);
+            var orders = _ordersRepository.GetInstrumentOrders(instrumentId)
+                .Where(x => x.Quantity == quantity);
 
             if(orders == null || !orders.Any())
                 throw new ArgumentException("No market orders found");

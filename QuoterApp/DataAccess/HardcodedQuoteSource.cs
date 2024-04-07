@@ -1,8 +1,5 @@
-﻿using System;
-using System.Collections;
-using System.Collections.Generic;
+﻿using QuoterApp.Model;
 using System.Threading;
-using QuoterApp.Model;
 
 namespace QuoterApp.DataAccess
 {
@@ -31,15 +28,6 @@ namespace QuoterApp.DataAccess
 
             Thread.Sleep(500); // Simulates delay in getting next quote
             return _quotes[position++];
-        }
-
-        public IEnumerable<MarketOrder> GetMarketOrders()
-        {
-            while (position < _quotes.Length)
-            {
-                yield return _quotes[position++];
-                Thread.Sleep(500);
-            }
         }
     }
 }

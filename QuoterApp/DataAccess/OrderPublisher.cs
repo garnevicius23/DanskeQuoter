@@ -1,5 +1,5 @@
-﻿using System;
-using QuoterApp.Model;
+﻿using QuoterApp.Model;
+using System;
 
 namespace QuoterApp.DataAccess
 {

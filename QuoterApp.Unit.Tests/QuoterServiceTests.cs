@@ -20,23 +20,23 @@ namespace QuoterApp.Unit.Tests
         }
 
         [Test]
-        public void GetQuote_WithOrders_ReturnsMinimumPrice()
+        public void GetQuote_ReturnsCorrectQuote()
         {
             var orders = new List<MarketOrder>
             {
-                new MarketOrder { Price = 100 },
-                new MarketOrder { Price = 150 },
-                new MarketOrder { Price = 120 }
+                new MarketOrder { InstrumentId = "instrumentId", Quantity = 10, Price = 20 },
+                new MarketOrder { InstrumentId = "instrumentId", Quantity = 10, Price = 30 },
+                new MarketOrder { InstrumentId = "instrumentId", Quantity = 10, Price = 25 }
             };
 
-            var mockRepository = new Mock<IOrdersRepository>();
-            mockRepository.Setup(repo => repo.GetInstrumentOrders(It.IsAny<string>())).Returns(orders);
+            var ordersRepositoryMock = new Mock<IOrdersRepository>();
+            ordersRepositoryMock.Setup(repo => repo.GetInstrumentOrders("instrumentId")).Returns(orders);
 
-            var service = new QuoterService(mockRepository.Object);
+            var quoterService = new QuoterService(ordersRepositoryMock.Object);
 
-            var quote = service.GetQuote("instrumentId", 10);
+            var quote = quoterService.GetQuote("instrumentId", 10);
 
-            Assert.AreEqual(100, quote);
+            Assert.AreEqual(20, quote);
         }
 
         [Test]
@@ -51,23 +51,23 @@ namespace QuoterApp.Unit.Tests
         }
 
         [Test]
-        public void GetVolumeWeightedAveragePrice_WithOrders_ReturnsCorrectValue()
+        public void GetVolumeWeightedAveragePrice_CalculatesCorrectly()
         {
             var orders = new List<MarketOrder>
             {
-                new MarketOrder { Price = 100, Quantity = 10 },
-                new MarketOrder { Price = 150, Quantity = 5 },
-                new MarketOrder { Price = 120, Quantity = 8 }
+                new MarketOrder { InstrumentId = "instrumentId", Quantity = 10, Price = 20 },
+                new MarketOrder { InstrumentId = "instrumentId", Quantity = 20, Price = 30 },
+                new MarketOrder { InstrumentId = "instrumentId", Quantity = 30, Price = 25 }
             };
 
-            var mockRepository = new Mock<IOrdersRepository>();
-            mockRepository.Setup(repo => repo.GetInstrumentOrders(It.IsAny<string>())).Returns(orders);
+            var ordersRepositoryMock = new Mock<IOrdersRepository>();
+            ordersRepositoryMock.Setup(repo => repo.GetInstrumentOrders("instrumentId")).Returns(orders);
 
-            var service = new QuoterService(mockRepository.Object);
+            var quoterService = new QuoterService(ordersRepositoryMock.Object);
 
-            var vwamp = service.GetVolumeWeightedAveragePrice("instrumentId");
+            var averagePrice = quoterService.GetVolumeWeightedAveragePrice("instrumentId");
 
-            Assert.AreEqual(117.89, vwamp, 0.1);
+            Assert.AreEqual(25.82, averagePrice, 0.1);
         }
     }
 }
